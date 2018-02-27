@@ -1,6 +1,3 @@
-clear;
-clc;
-close all;
 % Why modulation/demodulation?
 
 % Antenna must be roughly 1/4 wavelength, so higher frequencies allow
@@ -16,9 +13,6 @@ close all;
 
 % Model system with a = b and phi = 0
 % Plot in both time domain and frequency domain.
-fig = figure
-set(fig, 'Position', [0 0 1366 768]); % sets size of figure; 1366x768
-set(fig, 'Name', 'Time Domain');
 
 fsampling = 1000;
 t = 0:1/fsampling:4;
@@ -28,12 +22,24 @@ b = 60;
 
 carrier = cos(a*2*pi*t);
 modulated = carrier.*msg;
+demodulated = modulated.*cos(b*2*pi*t);
+
+Hd = lowpass(); 
+freqz(Hd);
+clean = filter(Hd,demodulated);
+
+fig = figure
+set(fig, 'Position', [0 0 1366 768]); % sets size of figure; 1366x768
+set(fig, 'Name', 'Time Domain');
 
 subplot(4,1,1);
+hold on;
 plot(t, msg);
 title('Signal');
 xlabel('t');
 ylabel('Signal (V)');
+hold off;
+
 
 subplot(4,1,2);
 hold on;
@@ -45,7 +51,6 @@ hold off;
 
 subplot(4,1,3);
 hold on;
-demodulated = modulated.*cos(b*2*pi*t);
 plot(t, demodulated, 'DisplayName', 'Demodulated Signal');
 plot(t, msg, 'DisplayName', 'Signal');
 legend('show');
@@ -53,6 +58,13 @@ title('Demodulated Signal');
 hold off;
 
 subplot(4,1,4);
+hold on;
+plot(t, clean, 'DisplayName', 'Filtered Signal');
+plot(t, msg, 'DisplayName', 'Signal');
+legend('show');
+title('Output Signal');
+hold off;
+
 % Recover the original message...
 
 %% Frequency Domain
@@ -111,8 +123,21 @@ hold off
 
 subplot(4,1,4);
 % Plot the filtered wave here...
+hold on
+Clean = fft(clean);
+plot(omega, abs(Clean));
+[pks, locs] = findpeaks(abs(Clean), omega);
+ylimits = get(gca, 'ylim');
+for p=locs
+   line([p p], ylimits, 'Color', [0.7 0.7 0.7], 'Linestyle', ':');
+end
 xlim([0,150]);
-xtickangle(90);
+xticks(unique([a a+ b locs get(gca, 'Xtick')]));
+xtickformat('%,.1f');
+xtickangle(90)
+title('Clean Signal')
+hold off
+
 
 % This is the ideal case, but not easy to sync up between two distant locations
 % What happens if there's a phase shift?

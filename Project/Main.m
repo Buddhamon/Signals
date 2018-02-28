@@ -9,4 +9,4 @@ close all;
 %       cos(at)                              cos(bt+phi)
 %%
 % Message Signal
-MessageSignal();
+[t, m] = MessageSignal();

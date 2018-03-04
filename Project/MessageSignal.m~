@@ -1,0 +1,10 @@
+function [t,y] = MessageSignal()
+
+Fs = 44100;
+samples = [1,20*freq];
+samples
+[y, freq] = audioread('AudioFile.wav',samples);
+freq
+sound(y, freq)
+t = 0:1/freq:(length(y) - 1)/freq;
+end

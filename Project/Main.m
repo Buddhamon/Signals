@@ -9,4 +9,7 @@ close all;
 %       cos(at)                              cos(bt+phi)
 %%
 % Message Signal
-[t, m] = MessageSignal();
+[t,y] = MessageSignal();
+
+% Graphing(t,y);
+

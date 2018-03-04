@@ -2,18 +2,20 @@ clc;
 clear;
 close all;
 %% Flow diagram
+%
 % msg -> MODULATOR -> TRANSMISSION CHANNEL -> DEMODULATOR -> LPF -> ???
 %           ^                                     ^
 %           |                                     |
 %       cos(at)                              cos(bt+phi)
 %%
-
+%
 % Message Signal
-[t,y] = MessageSignal(6);
+[t,y] = MessageSignal(6); % Gets t and y(t) for a message given an index
 % Graphing(t,y);
 
-
-% \/ \/ \/ \/ \/ Hello World's Code \/ \/ \/ \/ \/
+% \/ \/ \/ \/ \/ Hello World's Code \/ \/ \/ \/ \/ 
+% This needs to be updated later, move this code into a function 
+%   maybe to Grapbing(t,y)
 
 x = y;
 fsampling = 10000; %sampling rate
@@ -35,6 +37,6 @@ subplot(2,1,2)
 plot(omega, abs(X));
 title('signal X(\omega), magnitude')
 
-
+% /\ /\ /\ /\ /\ Hello World's Code /\ /\ /\ /\ /\
 
 

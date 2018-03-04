@@ -53,7 +53,6 @@ elseif(messageType == 5) % pulse trains
     
 elseif(messageType == 6) % audiofile
     Fs = 44100; % Number of sampling points ?
-    %samples = [1*Fs,10*Fs];
     timeSegment = (110 * rand) + 11;
     timeSegment = floor(timeSegment);
     samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like

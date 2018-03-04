@@ -1,5 +1,6 @@
 %% Matlab basics
 
+clc;
 clear;
 close all;
 
@@ -72,12 +73,16 @@ maxR = max(r);
 x = 0:0.01:4*pi;
 y = 2*sin(x); %Automagically vectorized functions!
 
+figure;
+hold on;
 plot(x,y)
 title('Sine Wave')
 xlabel('\Theta')
+hold off;
 
 %% More complicated plotting
 
+figure;
 hold on
 plot(x, 2*cos(x), 'r--')
 legend('sin', 'cos')
@@ -86,12 +91,15 @@ hold off
 clc;
 %% Audio file!
 
-filename = '../RecordedVoice.wav';
-[y,freq] = audioread(filename);
-sound(y, freq);
-t = 0:1/freq:(length(y) - 1)/freq;
-plot(t,y);
+filename = 'AudioFile.wav';
 
+[y,freq] = audioread(filename);
+%sound(y, freq);
+t = 0:1/freq:(length(y) - 1)/freq;
+figure;
+hold on;
+plot(t,y);
+hold off;
 %% fast fourier transforms!
 
 fsampling = 100; %sampling rate
@@ -104,6 +112,8 @@ X = fft(x);
 X = X/L;
 omega = ((0:length(X)-1)/length(X))*fsampling; %define frequency axis
 
+figure;
+hold on;
 subplot(3,1,1) % let's you put multiple plots on the same figure
 plot(t,x);
 title('signal x(t) in the time domain');
@@ -119,6 +129,7 @@ title('signal X(\omega), magnitude')
 subplot(3,1,3)
 plot(omega, angle(X))
 title('signal X(\omega), phase')
+hold off;
 % hey! why is this a complex number?
 
 % what else can you throw into fft? Why do they look different?

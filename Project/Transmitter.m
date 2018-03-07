@@ -35,6 +35,6 @@ hold off;
 figure;
 filename = 'RecordedVoice.wav';
 [y,freq] = audioread(filename);
-sound(y, freq);
+% sound(y, freq);
 t = 0:1/freq:(length(y) - 1)/freq;
 plot(t,y);

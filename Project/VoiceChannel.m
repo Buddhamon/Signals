@@ -1,18 +1,20 @@
-filename = 'AudioFile.wav';
-samples1 = [1000,400000];
-samples2 = [600000,999000];
+filename1 = 'AudioFile.wav';
+filename2 = 'RecordedVoice.wav';
+samples1 = [1000,200000];
+samples2 = [1000,200000];
+
 clear y Fs
-[y,freq] = audioread(filename,samples1);
+[y,freq] = audioread(filename1,samples1);
 
 t = 0:1/freq:(length(y) - 1)/freq;
 
-[x,freq2] = audioread(filename,samples2);
+[x,freq2] = audioread(filename2,samples2);
 
-A = y(:,end)
-msg1 = A'
+A = y(:,end);
+msg1 = A';
 
-B = x(:,end)
-msg2 = B'
+B = x(:,end);
+msg2 = B';
 
 a = 11000;
 
@@ -22,9 +24,9 @@ carrier2 = cos(a*2*pi*t);
 modulated1 = carrier1.*msg1;
 modulated2 = carrier2.*msg2;
 
-channel = modulated1+modulated2
+channel = modulated1+modulated2;
 
-demodulated1 = channel.*sin(a*2*pi*t);
+demodulated1 = channel.*sin((a*2*pi*t)+pi/2);
 demodulated2 = channel.*cos(a*2*pi*t);
 
 SFd = lowpass(); 

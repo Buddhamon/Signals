@@ -52,13 +52,24 @@ elseif(messageType == 5) % pulse trains
     y = sign * pulstran(t,pulsePeriods,func,pulseWidth);
     
 elseif(messageType == 6) % audiofile
-    Fs = 44100; % Number of sampling points ?
-    timeSegment = (110 * rand) + 11;
-    timeSegment = floor(timeSegment);
-    samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like
-                     % to observe the audio file)             
-    [y, Fs] = audioread('AudioFile.wav',samples);
-    t = 0:1/Fs:(length(y) - 1)/Fs; % Time domain derived from sampling points
-    % sound(y, Fs) % This line plays the audio file
+    Fs = 44100;
+    type = 2*rand;
+    type = floor(type);
+    if(type == 1) %Audio File
+        timeSegment = (110 * rand) + 11;
+        timeSegment = floor(timeSegment);
+        samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like
+                     % to observe the audio file)  
+        [y, Fs] = audioread('AudioFile.wav',samples);
+        t = 0:1/Fs:(length(y) - 1)/Fs; % Time domain derived from sampling points
+    else %Recorded Voice
+        timeSegment = (18 * rand) + 11;
+        timeSegment = floor(timeSegment);
+        samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like
+                     % to observe the audio file) 
+        [y, Fs] = audioread('RecordedVoice.wav',samples);
+        t = 0:1/Fs:(length(y) - 1)/Fs; % Time domain derived from sampling points
+    end
+    sound(y, Fs) % This line plays the audio file
 end
 end

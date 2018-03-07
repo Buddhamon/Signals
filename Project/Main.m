@@ -8,8 +8,15 @@ close all;
 %           |                                     |
 %       cos(at)                              cos(bt+phi)
 %%
-%
+
 % Message Signal
 [t,y] = MessageSignal(6); % Gets t and y(t) for a message given an index
 Graphing(t,y);
 
+% Transmitter
+
+% Channel
+
+% Receiver
+
+% Final Message

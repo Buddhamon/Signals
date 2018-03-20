@@ -61,6 +61,7 @@ elseif(messageType == 6) % audiofile
         samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like
                      % to observe the audio file)  
         [y, Fs] = audioread('AudioFile.wav',samples);
+        y = y(:, 1);
         t = 0:1/Fs:(length(y) - 1)/Fs; % Time domain derived from sampling points
     else %Recorded Voice
         timeSegment = (18 * rand) + 11;
@@ -68,8 +69,9 @@ elseif(messageType == 6) % audiofile
         samples = [(timeSegment-10)*Fs,(timeSegment)*Fs]; % (Sampling points) * (number of seconds you'd like
                      % to observe the audio file) 
         [y, Fs] = audioread('RecordedVoice.wav',samples);
+        y = y(:, 1);
         t = 0:1/Fs:(length(y) - 1)/Fs; % Time domain derived from sampling points
     end
-    sound(y, Fs) % This line plays the audio file
+%     sound(y, Fs) % This line plays the audio file
 end
 end

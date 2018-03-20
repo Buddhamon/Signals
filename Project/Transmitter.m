@@ -38,3 +38,8 @@ filename = 'RecordedVoice.wav';
 sound(y, freq);
 t = 0:1/freq:(length(y) - 1)/freq;
 plot(t,y);
+
+
+
+
+

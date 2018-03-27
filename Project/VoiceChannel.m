@@ -31,7 +31,7 @@ demodulated2 = channel.*cos(a*2*pi*t);
 both = channel.*sin((a*2*pi*t)+(pi/4));
 
 Hd = LowpassFilt(); 
-freqz(SFd);
+freqz(Hd);
 
 clean1 = filter(Hd,demodulated1);
 clean2 = filter(Hd,demodulated2);

@@ -6,7 +6,7 @@
     %   y - y(t)
 function [t,y] = MessageSignal(messageType)
 
-t = 0:0.01:10; % 1000 points accross 10 seconds
+t = 0:0.001:10; % 1000 points accross 10 seconds
 sign = rand; % determines sign of signal
 if(sign > 0.5)
     sign = -1;

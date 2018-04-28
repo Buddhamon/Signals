@@ -1,28 +1,40 @@
-function [] = Graphing(t, y)
-% \/ \/ \/ \/ \/ Hello World's Code \/ \/ \/ \/ \/ 
-% This needs to be updated later, move this code into a function 
-%   maybe to Grapbing(t,y)
-
-fsampling = 10000; %sampling rate
-
-L = length(y);
-Y = fft(y);
-Y = Y/L;
-omega = ((0:length(Y)-1)/length(Y))*fsampling; %define frequency axis
-
+function [] = Graphing(t, y, fs)
 figure;
 hold on;
+
+%% First Graph, Time
 subplot(2,1,1) % let's you put multiple plots on the same figure
 plot(t,y);
 title('signal y(t) in the time domain');
-xlabel(sprintf('t, sampled at the rate of %d', fsampling));
+xlabel(sprintf('t (sec)'));
 ylabel('y(t)');
 
-subplot(2,1,2)
-plot(omega, abs(Y));
-title('signal Y(\omega), magnitude')
+%% Making Second Graph
 
-% /\ /\ /\ /\ /\ Hello World's Code /\ /\ /\ /\ /\
+% fsampling = 10000; %sampling rate
+% L = length(y);
+% Y = fft(y);
+% Y = abs(Y/L); % Normalizing FFT
+
+N = length(t);
+Y = fftshift(fft(y));  
+dF = fs/N;                      % hertz
+omega = -fs/2:dF:fs/2-dF;           % hertz
+half_omega = omega(floor(length(omega)/2):floor(length(omega)));
+temp = (abs(Y)/N);
+half_Y = temp(floor(length(temp)/2):floor(length(temp)));
+
+
+%% Second Graph, Frequency
+subplot(2,1,2)
+% plot(omega, Y)
+plot(half_omega, half_Y)
+title('signal Y(\omega) in the frequency domain')
+xlabel(sprintf('t, sampled at the rate of %d', fs));
+ylabel('Y(\omega)');
+% axis([0 length(Y) 0 max(Y)])
+
+hold off;
 
 end
 

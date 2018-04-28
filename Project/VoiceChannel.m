@@ -36,7 +36,7 @@ freqz(Hd);
 clean1 = filter(Hd,demodulated1);
 clean2 = filter(Hd,demodulated2);
 
-sound(clean1, freq);
+% sound(clean1, freq);
 
 fig = figure
 set(fig, 'Position', [0 0 1366 768]); % sets size of figure; 1366x768

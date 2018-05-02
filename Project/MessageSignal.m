@@ -10,7 +10,7 @@
 function [t, y, fs] = MessageSignal(messageType, samplingFrequency)
 
 fs = samplingFrequency; % 
-duration = 3; % duration of signal in seconds
+duration = 3; % duration of signal in seconds, maximum of 26
 
 t = 0:1/fs:duration; 
 
@@ -38,15 +38,15 @@ elseif(messageType == 3) % Square Wave
     amplitude = 100 * rand;
     y = sign * amplitude * square(omega*t);
     
-elseif(messageType == 4) % Triagle Wave
-    freq = 30*rand;
+elseif(messageType == 4) % Triangle Wave
+    freq = 100*rand;
     omega = 2 * pi * freq;
     amplitude = 100 * rand;
     y = sign * amplitude * sawtooth(omega*t);
     
 elseif(messageType == 5) % Pulse Trains
-    pulsePeriods = 0 : 1 : 10;   
-    pulseWidth = 0.25;
+    pulsePeriods = 0 : .01 : 50;   
+    pulseWidth = 0.001;
     pulseType = 3 * rand; % determines what type of pulse
     if(pulseType < 1)
         func = 'gauspuls';
@@ -60,23 +60,42 @@ elseif(messageType == 5) % Pulse Trains
 elseif(messageType == 6) % Audio File
     type = 2*rand;
     type = floor(type);
+    random = ceil(rand*(27-duration));
     if(type == 1) % Audio File
         [y, fs] = audioread('AudioFile.wav');
         t = 0:1/fs:duration;
-        samples = [1, (duration*fs)+1];
+        samples = [fs*random, (duration*fs)+(random*fs)];
         [y, fs] = audioread('AudioFile.wav',samples);
         y = y(:,1);
         y = y';
     else % Recorded Voice
         [y, fs] = audioread('RecordedVoice.wav');
         t = 0:1/fs:duration;
-        samples = [1, (duration*fs)+1];
+        samples = [fs*random, (duration*fs)+(random*fs)];
         [y, fs] = audioread('RecordedVoice.wav',samples);
         y = y(:,1);
         y = y';
     end
+elseif(messageType == 7)
+%     t = 0:1/fs:duration; 
+    amplitude = 5;
+    numberOfPulses = 50;
+    time_sections = length(t)/numberOfPulses;
+    y = [0:1:length(t)-1];
+    for i = 1:length(y)
+        y(i) = 0;
+    end
+    
+    for i = 1:numberOfPulses-1
+        random = floor(2*rand);
+        if(random)
+            y_k = 0;
+        else
+            y_k = amplitude;
+        end
+        for k = floor(i*time_sections):floor((i+1)*time_sections)
+            y(k) = y_k;
+        end
+    end
 end
 end
-
-
-

@@ -1,5 +1,5 @@
-function [] = Graphing(t, y, fs)
-figure;
+function [] = Graphing(t, y, fs, figureName)
+figure('Name', figureName);
 hold on;
 
 %% First Graph, Time
@@ -11,19 +11,13 @@ ylabel('y(t)');
 
 %% Making Second Graph
 
-% fsampling = 10000; %sampling rate
-% L = length(y);
-% Y = fft(y);
-% Y = abs(Y/L); % Normalizing FFT
-
 N = length(t);
 Y = fftshift(fft(y));  
-dF = fs/N;                      % hertz
+dF = fs/N;                          % hertz
 omega = -fs/2:dF:fs/2-dF;           % hertz
 half_omega = omega(floor(length(omega)/2):floor(length(omega)));
 temp = (abs(Y)/N);
 half_Y = temp(floor(length(temp)/2):floor(length(temp)));
-
 
 %% Second Graph, Frequency
 subplot(2,1,2)
